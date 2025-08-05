@@ -63,6 +63,15 @@ const [polygonNames, setPolygonNames] = useState<Record<number, string>>(() => {
     }
   }, []);
 
+  // This useEffect hook runs once on startup to fetch data for any polygons loaded from localStorage.
+useEffect(() => {
+  polygons.forEach(polygon => {
+    if (!weatherData[polygon.id]) {
+      handleFetchData(polygon);
+    }
+  });
+}, [polygons, weatherData, handleFetchData]);
+
   // --- MAP EVENT HANDLERS ---
   const onCreated = (e: LeafletEvent & { layer: L.Polygon }) => {
     const layer = e.layer;
