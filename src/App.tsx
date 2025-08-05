@@ -24,14 +24,24 @@ const getPolygonCenter = (latlngs: LatLngExpression[]): [number, number] => {
 const App: React.FC = () => {
   // --- STATE MANAGEMENT ---
   // All the application's state is managed here in the top-level component.
-  const [polygons, setPolygons] = useState<PolygonType[]>([]);
-  const [polygonNames, setPolygonNames] = useState<Record<number, string>>({});
+  const [polygons, setPolygons] = useState<PolygonType[]>(() => {
+  const saved = localStorage.getItem('polygons');
+  return saved ? JSON.parse(saved) : [];
+});
+  
+const [polygonNames, setPolygonNames] = useState<Record<number, string>>(() => {
+  const saved = localStorage.getItem('polygonNames');
+  return saved ? JSON.parse(saved) : {};
+});
   const [weatherData, setWeatherData] = useState<Record<number, WeatherData>>({});
   const [timeRange, setTimeRange] = useState<[number, number]>([0, 24]);
-  const [rules, setRules] = useState<RuleType[]>([
-    { operator: '<', value: 10, color: '#3b82f6' }, // Blue
-    { operator: '>=', value: 25, color: '#ef4444' }, // Red
-  ]);
+  const [rules, setRules] = useState<RuleType[]>(() => {
+  const saved = localStorage.getItem('rules');
+  return saved ? JSON.parse(saved) : [
+    { operator: '<', value: 10, color: '#3b82f6' },
+    { operator: '>=', value: 25, color: '#ef4444' },
+  ];
+});
 
   // --- DATA FETCHING LOGIC ---
   const handleFetchData = useCallback(async (polygon: PolygonType) => {
