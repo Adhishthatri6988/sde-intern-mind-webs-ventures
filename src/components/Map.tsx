@@ -4,7 +4,8 @@ import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Polygon, FeatureGroup, useMap } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
 import L, { LeafletEvent } from 'leaflet';
-import { PolygonType } from '../types/types';
+import { PolygonType, RuleType } from '../types/types';
+import Legend from './Legend';
 
 // This is a common fix for a known issue with Leaflet and bundlers like Vite
 // It ensures that the default marker icons load correctly.
@@ -31,6 +32,7 @@ const MapController: React.FC = () => {
 interface MapComponentProps {
   polygons: PolygonType[];
   polygonColors: Record<number, string>;
+  rules: RuleType[];
   onCreated: (e: LeafletEvent & { layer: L.Polygon }) => void;
   onEdited: (e: LeafletEvent & { layers: L.LayerGroup }) => void;
   onDeleted: (e: LeafletEvent & { layers: L.LayerGroup }) => void;
@@ -39,6 +41,7 @@ interface MapComponentProps {
 const MapComponent: React.FC<MapComponentProps> = ({
   polygons,
   polygonColors,
+  rules,
   onCreated,
   onEdited,
   onDeleted,
@@ -94,6 +97,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
         ))}
 
         <MapController />
+        <Legend rules={rules} />
       </MapContainer>
     </main>
   );
