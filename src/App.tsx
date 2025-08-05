@@ -145,6 +145,7 @@ const App: React.FC = () => {
       <MapComponent
         polygons={polygons}
         polygonColors={polygonColors}
+         rules={rules}
         onCreated={onCreated}
         onEdited={onEdited}
         onDeleted={onDeleted}
