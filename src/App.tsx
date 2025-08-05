@@ -1,6 +1,7 @@
 // src/App.tsx
 
 import React, { useState, useCallback } from 'react';
+import { useEffect } from 'react';
 import L, { LatLngExpression, LeafletEvent } from 'leaflet';
 
 // Import our structured components and services
@@ -42,6 +43,14 @@ const [polygonNames, setPolygonNames] = useState<Record<number, string>>(() => {
     { operator: '>=', value: 25, color: '#ef4444' },
   ];
 });
+
+// --- HOOKS FOR PERSISTENCE ---
+  // This useEffect hook runs whenever polygons, names, or rules change, saving them to localStorage.
+  useEffect(() => {
+    localStorage.setItem('polygons', JSON.stringify(polygons));
+    localStorage.setItem('polygonNames', JSON.stringify(polygonNames));
+    localStorage.setItem('rules', JSON.stringify(rules));
+  }, [polygons, polygonNames, rules]);
 
   // --- DATA FETCHING LOGIC ---
   const handleFetchData = useCallback(async (polygon: PolygonType) => {
