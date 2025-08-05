@@ -1,5 +1,5 @@
 import { format, subDays, addDays } from 'date-fns';
-import { WeatherData } from '../types/types'
+import { WeatherData } from '../types/types';
 
 const API_BASE_URL = import.meta.env.VITE_WEATHER_API_BASE_URL;
 
